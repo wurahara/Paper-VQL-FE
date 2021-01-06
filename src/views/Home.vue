@@ -3,7 +3,7 @@
   <div class="desc">Welcome to use our query client.</div>
 </template>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
 .jumbo
   margin 100px 0 10px 0
   font-size 72px

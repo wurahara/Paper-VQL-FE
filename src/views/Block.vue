@@ -3,26 +3,27 @@
 
     <h1>Create new block query</h1>
 
-    <el-card class="card" shadow="hover">
+    <el-card class="card-panel" shadow="hover">
       <h2>Query block by hash</h2>
       <el-row type="flex" justify="center">
         <el-col :span="3"><h4 class="tag">Hash</h4></el-col>
-        <el-col :span="16"><el-input placeholder="Hash" v-model="input" clearable></el-input></el-col>
-        <el-col :span="4"><el-button type="primary" icon="el-icon-upload2">Submit</el-button></el-col>
+        <el-col :span="16"><el-input placeholder="Hash" v-model="hashInput" clearable></el-input></el-col>
+        <el-col :span="4"><el-button type="primary" icon="el-icon-upload2" @click="hashQuery">Submit</el-button></el-col>
       </el-row>
     </el-card>
 
-    <el-card class="card" shadow="hover">
+    <el-card class="card-panel" shadow="hover">
       <h2>Query block by number</h2>
       <el-row type="flex" justify="center">
         <el-col :span="3"><h4 class="tag">Number</h4></el-col>
-        <el-col :span="16"><el-input placeholder="Block number" v-model="input" clearable></el-input></el-col>
-        <el-col :span="4"><el-button type="primary" icon="el-icon-upload2">Submit</el-button></el-col>
+        <el-col :span="16"><el-input placeholder="Block number" v-model="blockNumberInput" clearable></el-input></el-col>
+        <el-col :span="4"><el-button type="primary" icon="el-icon-upload2" @click="numQuery">Submit</el-button></el-col>
       </el-row>
     </el-card>
 
     <h2>Query result</h2>
-    <el-input class="result" type="textarea" :rows="20" v-model="textarea" placeholder="Query result" :disabled="true"></el-input>
+    <el-input class="result-display" type="textarea" v-model="resultTextarea" placeholder="Query result" :rows="20" :disabled="true">
+    </el-input>
 
   </div>
 </template>
@@ -35,9 +36,53 @@ h4
   text-align right
 .el-button
   font-family Avenir, Helvetica, Arial, sans-serif
-.card
+  font-weight bold
+.card-panel
   width 60%
   margin 20px auto
-.result
+.result-display
   width 60%
 </style>
+
+<script>
+import { queryBlockByHash, queryBlockByNum } from '../api/block'
+import { emitWarningNotification } from '../util/helper'
+import { checkForContent } from '../util/validator'
+
+export default {
+  data () {
+    return {
+      hashInput: '',
+      blockNumberInput: '',
+      resultTextarea: ''
+    }
+  },
+
+  methods: {
+    hashQuery () {
+      if (checkForContent(this.hashInput) === false) {
+        emitWarningNotification('Warning', 'You must enter block hash.')
+      } else {
+        queryBlockByHash(this.hashInput).then(res => {
+          this.resultTextarea = JSON.stringify(res)
+          this.clearInputContent()
+        })
+      }
+    },
+    numQuery () {
+      if (checkForContent(this.blockNumberInput) === false) {
+        emitWarningNotification('Warning', 'You must enter block number.')
+      } else {
+        queryBlockByNum(this.blockNumberInput).then(res => {
+          this.resultTextarea = JSON.stringify(res)
+          this.clearInputContent()
+        })
+      }
+    },
+    clearInputContent () {
+      this.hashInput = ''
+      this.blockNumberInput = ''
+    }
+  }
+}
+</script>
