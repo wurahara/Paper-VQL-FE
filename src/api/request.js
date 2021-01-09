@@ -1,8 +1,9 @@
 import axios from 'axios'
+import { emitWarningNotification } from '../util/helper'
 
 // create axios service
 const service = axios.create({
-  baseURL: process.env.baseURL,
+  baseURL: 'http://158.132.20.116:8080',
   timeout: 15000
 })
 
@@ -11,23 +12,18 @@ service.interceptors.request.use(config => {
   config.headers['Content-Type'] = 'application/json'
   return config
 }, error => {
-  console.log(error)
+  emitWarningNotification('Request Error', error.message)
   Promise.reject(error)
+  throw error
 })
 
 // intercept response
 service.interceptors.response.use(response => {
-  // const res = response.data
-  // if (res.code !== 200) {
-  //   console.log('Response error occured.')
-  //   return Promise.reject(new Error('Response error'))
-  // } else {
-  //   return response.data
-  // }
   return response.data
 }, error => {
-  console.log(error)
-  return Promise.reject(error)
+  emitWarningNotification('Response Error', error.message)
+  throw error
+  // return Promise.reject(error)
 })
 
 export default service

@@ -10,6 +10,9 @@
     </el-header>
   </el-container>
   <router-view/>
+  <el-container>
+    <el-footer>Copyright © 2021 COMP PolyU. All Rights Reserved</el-footer>
+  </el-container>
 </template>
 
 <style lang="stylus">
@@ -23,8 +26,11 @@
 #nav
   width 65%
 .el-header
-  background-color #409EFF
+  background-color #3579F6
   line-height 60px
+.el-footer
+  font-weight 500
+  margin-top 40px
 body
   margin-top 0
   margin-left 0

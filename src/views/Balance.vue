@@ -70,6 +70,11 @@ h4
 </style>
 
 <script>
+import { queryBalanceSum, queryBalanceRecords } from '../api/balance'
+import { emitWarningNotification } from '../util/helper'
+import { checkForContent, checkForContents } from '../util/validator'
+import { transformDateFormat } from '../util/formatter'
+
 export default {
   data () {
     return {
@@ -87,12 +92,46 @@ export default {
 
   methods: {
     sumQuery () {
-      console.log('balance sum query')
-      this.clearInputContent()
+      if (!this.checkSumFormContent()) {
+        emitWarningNotification('Error', 'All query fields are empty!')
+      } else {
+        queryBalanceSum(this.constructSumQueryRequestBody()).then(res => {
+          this.resultTextarea = JSON.stringify(res, null, 2)
+          this.clearInputContent()
+        }).catch(() => {
+          this.resultTextarea = ''
+          this.clearInputContent()
+        })
+      }
     },
     recordsQuery () {
-      console.log('balance records query')
-      this.clearInputContent()
+      if (!this.checkRecordsFormContent()) {
+        emitWarningNotification('Error', 'All query fields are empty')
+      } else {
+        queryBalanceRecords(this.constructRecordsQueryRequestBody()).then(res => {
+          this.resultTextarea = JSON.stringify(res, null, 2)
+          this.clearInputContent()
+        }).catch(() => {
+          this.resultTextarea = ''
+          this.clearInputContent()
+        })
+      }
+    },
+    checkSumFormContent () {
+      return checkForContents([
+        this.dateRangeInput1,
+        this.addressInput1
+      ])
+    },
+    checkRecordsFormContent () {
+      return checkForContents([
+        this.dateRangeInput2,
+        this.addressInput2,
+        this.expenseBottomInput,
+        this.expensePeakInput,
+        this.incomeBottomInput,
+        this.incomePeakInput
+      ])
     },
     clearSumInputContent () {
       this.dateRangeInput1 = ''
@@ -109,6 +148,58 @@ export default {
     clearInputContent () {
       this.clearSumInputContent()
       this.clearRecordsInputContent()
+    },
+    constructSumQueryRequestBody () {
+      const requestBody = {
+        DatePeriod: [transformDateFormat(this.dateRangeInput1[0]), transformDateFormat(this.dateRangeInput1[1])],
+        Projection: [],
+        Filters: [{
+          LogicCode: 'AND',
+          Criteria: []
+        }],
+        Sort: []
+      }
+      if (checkForContent(this.addressInput1)) {
+        requestBody.Filters[0].Criteria.push({
+          FieldName: 'addr',
+          OpCode: 'IS',
+          Parameters: [this.addressInput1]
+        })
+      }
+      return requestBody
+    },
+    constructRecordsQueryRequestBody () {
+      const requestBody = {
+        DatePeriod: [transformDateFormat(this.dateRangeInput2[0]), transformDateFormat(this.dateRangeInput2[1])],
+        Projection: [],
+        Filters: [{
+          LogicCode: 'AND',
+          Criteria: []
+        }],
+        Sort: []
+      }
+      if (checkForContent(this.addressInput2)) {
+        requestBody.Filters[0].Criteria.push({
+          FieldName: 'addr',
+          OpCode: 'IS',
+          Parameters: [this.addressInput2]
+        })
+      }
+      if (checkForContent(this.expenseBottomInput) && checkForContent(this.expensePeakInput)) {
+        requestBody.Filters[0].Criteria.push({
+          FieldName: 'expense',
+          OpCode: 'BETWEEN',
+          Parameters: [this.expenseBottomInput, this.expensePeakInput]
+        })
+      }
+      if (checkForContent(this.incomeBottomInput) && checkForContent(this.incomePeakInput)) {
+        requestBody.Filters[0].Criteria.push({
+          FieldName: 'income',
+          OpCode: 'BETWEEN',
+          Parameters: [this.incomeBottomInput, this.incomePeakInput]
+        })
+      }
+      return requestBody
     }
   }
 }

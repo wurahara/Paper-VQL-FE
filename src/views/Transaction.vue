@@ -3,7 +3,7 @@
 
     <h1>Create new transaction query</h1>
 
-    <el-card class="card-panel" shadow="hover">
+    <el-card class="card-panel" shadow="hover" v-loading="loadingState" element-loading-text="Connecting with server ...">
       <h2>Query transaction</h2>
       <el-row type="flex" justify="center">
         <el-col :span="4"><h4>Date range</h4></el-col>
@@ -54,6 +54,11 @@ h4
 </style>
 
 <script>
+import { queryTransaction } from '../api/transaction'
+import { emitWarningNotification } from '../util/helper'
+import { checkForContent, checkForContents } from '../util/validator'
+import { transformDateFormat } from '../util/formatter'
+
 export default {
   data () {
     return {
@@ -62,14 +67,36 @@ export default {
       accountToInput: '',
       valueBottomInput: '',
       valuePeakInput: '',
-      resultTextarea: ''
+      resultTextarea: '',
+      loadingState: false
     }
   },
 
   methods: {
     transactionQuery () {
-      console.log('transaction query')
-      this.clearInputContent()
+      if (!this.checkFormContent()) {
+        emitWarningNotification('Error', 'All query fields are empty!')
+      } else {
+        this.loadingState = true
+        queryTransaction(this.constructRequestBody()).then(res => {
+          this.resultTextarea = JSON.stringify(res, null, 2)
+          this.clearInputContent()
+          this.loadingState = false
+        }).catch(() => {
+          this.resultTextarea = ''
+          this.clearInputContent()
+          this.loadingState = false
+        })
+      }
+    },
+    checkFormContent () {
+      return checkForContents([
+        this.dateRangeInput,
+        this.accountFromInput,
+        this.accountToInput,
+        this.valueBottomInput,
+        this.valuePeakInput
+      ])
     },
     clearInputContent () {
       this.dateRangeInput = ''
@@ -77,6 +104,39 @@ export default {
       this.accountToInput = ''
       this.valueBottomInput = ''
       this.valuePeakInput = ''
+    },
+    constructRequestBody () {
+      const requestBody = {
+        DatePeriod: [transformDateFormat(this.dateRangeInput[0]), transformDateFormat(this.dateRangeInput[1])],
+        Projection: [],
+        Filters: [{
+          LogicCode: 'AND',
+          Criteria: []
+        }],
+        Sort: []
+      }
+      if (checkForContent(this.accountFromInput)) {
+        requestBody.Filters[0].Criteria.push({
+          FieldName: 'from',
+          OpCode: 'IS',
+          Parameters: [this.accountFromInput]
+        })
+      }
+      if (checkForContent(this.accountToInput)) {
+        requestBody.Filters[0].Criteria.push({
+          FieldName: 'to',
+          OpCode: 'IS',
+          Parameters: [this.accountToInput]
+        })
+      }
+      if (checkForContent(this.valueBottomInput) && checkForContent(this.valuePeakInput)) {
+        requestBody.Filters[0].Criteria.push({
+          FieldName: 'value',
+          OpCode: 'BETWEEN',
+          Parameters: [this.valueBottomInput, this.valuePeakInput]
+        })
+      }
+      return requestBody
     }
   }
 }

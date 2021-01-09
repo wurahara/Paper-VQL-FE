@@ -61,20 +61,26 @@ export default {
   methods: {
     hashQuery () {
       if (checkForContent(this.hashInput) === false) {
-        emitWarningNotification('Warning', 'You must enter block hash.')
+        emitWarningNotification('Warning', 'Block hash cannot be empty.')
       } else {
         queryBlockByHash(this.hashInput).then(res => {
-          this.resultTextarea = JSON.stringify(res)
+          this.resultTextarea = JSON.stringify(res, null, 2)
+          this.clearInputContent()
+        }).catch(() => {
+          this.resultTextarea = ''
           this.clearInputContent()
         })
       }
     },
     numQuery () {
       if (checkForContent(this.blockNumberInput) === false) {
-        emitWarningNotification('Warning', 'You must enter block number.')
+        emitWarningNotification('Warning', 'Block number cannot be empty.')
       } else {
         queryBlockByNum(this.blockNumberInput).then(res => {
-          this.resultTextarea = JSON.stringify(res)
+          this.resultTextarea = JSON.stringify(res, null, 2)
+          this.clearInputContent()
+        }).catch(() => {
+          this.resultTextarea = ''
           this.clearInputContent()
         })
       }
