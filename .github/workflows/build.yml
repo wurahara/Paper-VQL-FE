@@ -21,7 +21,9 @@ jobs:
           node-version: '14.15.4'
           
       - name: Build front-end project
-        run: npm install && npm run build
+        run: |
+          npm install
+          npm run build
         
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
@@ -29,3 +31,17 @@ jobs:
           name: vql-dist
           path: dist
           retention-days: 1
+    
+  deploy:
+    runs-on: ubuntu-20.04
+    needs: build
+    steps:
+      - name: Download archived artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: vql-dist
+      
+      - name: Test archived files
+        run:
+          ls
+    
