@@ -29,17 +29,28 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: vql-dist
-          path: dist
+          path: |
+            dist
+            Dockerfile
+            nginx.conf
           retention-days: 1
     
   deploy:
     runs-on: ubuntu-20.04
     needs: build
     steps:
-      - name: Initial working space
-        run: |
-          mkdir dist
-          cd dist
+#       - name: Setup QEMU
+#         uses: docker/setup-qemu-action@v1
+      
+#       - name: Setup docker buildx
+#         uses: docker/setup-buildx-action@v1
+      
+#       - name: Login to Docker Hub
+#         uses: docker/login-action@v1
+#         with:
+#           username: ${{ secrets.DOCKER_HUB_USERNAME }}
+#           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      
       - name: Download archived artifacts
         uses: actions/download-artifact@v2
         with:
