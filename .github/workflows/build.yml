@@ -22,3 +22,10 @@ jobs:
           
       - name: Build front-end project
         run: npm install && npm run build
+        
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: vql-dist
+          path: dist
+          retention-days: 1
