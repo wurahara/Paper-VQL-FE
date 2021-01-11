@@ -36,6 +36,10 @@ jobs:
     runs-on: ubuntu-20.04
     needs: build
     steps:
+      - name: Initial working space
+        run: |
+          mkdir dist
+          cd dist
       - name: Download archived artifacts
         uses: actions/download-artifact@v2
         with:
