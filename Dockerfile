@@ -1,4 +1,4 @@
 FROM nginx
 RUN mkdir /app
-COPY ../vql /app
+COPY /dist /app
 COPY nginx.conf /etc/nginx/nginx.conf
