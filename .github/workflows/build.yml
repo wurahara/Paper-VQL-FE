@@ -61,5 +61,5 @@ jobs:
         with:
           file: ./Dockerfile
           push: true
-          tags: vql:latest
+          tags: wurahara/vql:latest
     
