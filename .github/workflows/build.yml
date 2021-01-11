@@ -57,7 +57,5 @@ jobs:
           name: vql-dist
       
       - name: Test archived files
-        run: |
-          cd ..
-          ls
+        run: ls
     
