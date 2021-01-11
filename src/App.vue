@@ -5,13 +5,14 @@
         <router-link to="/"><span class="app-tag">VQL-Client</span></router-link>&nbsp;&nbsp;&nbsp;
         <router-link to="/block"><span class="route-tag">Block</span></router-link>&nbsp;&nbsp;
         <router-link to="/transaction"><span class="route-tag">Transaction</span></router-link>&nbsp;&nbsp;
-        <router-link to="/balance"><span class="route-tag">Balance</span></router-link>
+        <router-link to="/balance"><span class="route-tag">Balance</span></router-link>&nbsp;&nbsp;
+        <router-link to="/auditing"><span class="route-tag">Auditing</span></router-link>
       </div>
     </el-header>
   </el-container>
   <router-view/>
   <el-container>
-    <el-footer>Copyright © 2021 COMP PolyU. All Rights Reserved</el-footer>
+    <el-footer>Copyright © 2021 COMP PolyU, all rights reserved.</el-footer>
   </el-container>
 </template>
 
@@ -24,7 +25,7 @@
   color #2c3e50
   margin-top 0px
 #nav
-  width 65%
+  width 70%
 .el-header
   background-color #3579F6
   line-height 60px

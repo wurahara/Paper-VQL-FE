@@ -5,8 +5,9 @@
 
 <style lang="stylus">
 .jumbo
-  margin 100px 0 10px 0
+  margin 200px 0 20px 0
   font-size 72px
 .desc
+  margin-bottom 250px
   font-size 24px
 </style>
