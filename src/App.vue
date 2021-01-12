@@ -18,7 +18,7 @@
 
 <style lang="stylus">
 #app
-  font-family Avenir, Helvetica, Arial, sans-serif
+  font-family Avenir, 'Calibri', 'Arial Nova', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
   text-align center
@@ -37,12 +37,12 @@ body
   margin-left 0
   margin-right 0
 .app-tag
-  font-weight bolder
+  font-weight 600
   font-size 24px
   &:hover
     color #CCC
 .route-tag
-  font-weight bold
+  font-weight 600
   font-size 18px
   &:hover
     color #CCC

@@ -7,6 +7,7 @@
 .jumbo
   margin 200px 0 20px 0
   font-size 72px
+  font-weight 600
 .desc
   margin-bottom 250px
   font-size 24px

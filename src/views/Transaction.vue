@@ -7,7 +7,7 @@
       <h2>Query transaction</h2>
       <el-row type="flex" justify="center">
         <el-col :span="4"><h4>Date range</h4></el-col>
-        <el-col :span="20"><el-date-picker v-model="dateRangeInput" :editable=false type="daterange" range-separator="to" start-placeholder="Start date" end-placeholder="End date" style="width:100%"></el-date-picker></el-col>
+        <el-col :span="20"><el-date-picker v-model="dateRangeInput" :editable=false type="daterange" range-separator="to" start-placeholder="Start date" end-placeholder="End date" style="width:100%;"></el-date-picker></el-col>
       </el-row>
       <el-row type="flex" justify="center">
         <el-col :span="4"><h4>From account</h4></el-col>
@@ -36,14 +36,21 @@
 <style lang="stylus" scoped>
 .el-row
   margin-bottom: 10px
+h1
+  font-weight 600
+h2
+  font-weight 500
 h4
   margin 9px 20px 9px 0
   text-align right
+  font-weight 500
 .el-button
-  font-family Avenir, Helvetica, Arial, sans-serif
+  font-family Avenir, 'Calibri', 'Arial Nova', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif
   font-weight bold
   width 20%
   margin 10px 40px 0 40px
+.el-input >>> input
+  font-family Avenir, 'Calibri', 'Arial Nova', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif
 .to-interval
   margin-top 9px
 .card-panel
@@ -51,6 +58,8 @@ h4
   margin 20px auto
 .result-display
   width 60%
+.el-textarea >>> textarea
+  font-family 'Courier New', Courier, monospace
 </style>
 
 <script>
