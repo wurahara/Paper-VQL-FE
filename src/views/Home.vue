@@ -1,5 +1,5 @@
 <template>
-  <h1 class="jumbo">VQL-Client</h1>
+  <div class="jumbo">VQL-Client</div>
   <div class="desc">Welcome to use our query client.</div>
 </template>
 

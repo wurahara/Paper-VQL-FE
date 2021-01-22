@@ -34,6 +34,15 @@ const routes = [
     path: '/auditing',
     name: 'Auditing',
     component: () => import('../views/Auditing.vue')
+  },
+  {
+    path: '/404',
+    name: 'Not Found',
+    component: () => import('../views/NotFound.vue')
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/404'
   }
 ]
 

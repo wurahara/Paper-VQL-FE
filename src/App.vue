@@ -12,7 +12,7 @@
   </el-container>
   <router-view/>
   <el-container>
-    <el-footer>Copyright © 2021 COMP PolyU, all rights reserved.</el-footer>
+    <el-footer>Copyright © 2021 COMP PolyU. All rights reserved.</el-footer>
   </el-container>
 </template>
 
