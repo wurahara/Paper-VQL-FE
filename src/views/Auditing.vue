@@ -31,10 +31,10 @@ h4
   text-align center
   font-weight 500
 .el-button
-  font-family Avenir, 'Calibri', 'Arial Nova', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif
+  font-family Avenir, 'Nunito', sans-serif
   font-weight bold
 .el-input >>> input
-  font-family Avenir, 'Calibri', 'Arial Nova', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif
+  font-family Avenir, 'Nunito', sans-serif
 .card-panel
   width 60%
   margin 20px auto
