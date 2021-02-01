@@ -74,7 +74,6 @@ export default {
       } else {
         queryBlockByHash(this.hashInput).then(res => {
           this.resultTextarea = JSON.stringify(res, null, 2)
-          this.clearInputContent()
         }).catch(() => {
           this.resultTextarea = ''
           this.clearInputContent()
@@ -87,7 +86,6 @@ export default {
       } else {
         queryBlockByNum(this.blockNumberInput).then(res => {
           this.resultTextarea = JSON.stringify(res, null, 2)
-          this.clearInputContent()
         }).catch(() => {
           this.resultTextarea = ''
           this.clearInputContent()

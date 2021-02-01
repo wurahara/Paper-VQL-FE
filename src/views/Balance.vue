@@ -106,7 +106,6 @@ export default {
       } else {
         queryBalanceSum(this.constructSumQueryRequestBody()).then(res => {
           this.resultTextarea = JSON.stringify(res, null, 2)
-          this.clearInputContent()
         }).catch(() => {
           this.resultTextarea = ''
           this.clearInputContent()
@@ -119,7 +118,6 @@ export default {
       } else {
         queryBalanceRecords(this.constructRecordsQueryRequestBody()).then(res => {
           this.resultTextarea = JSON.stringify(res, null, 2)
-          this.clearInputContent()
         }).catch(() => {
           this.resultTextarea = ''
           this.clearInputContent()

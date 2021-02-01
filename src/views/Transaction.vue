@@ -89,7 +89,6 @@ export default {
         this.loadingState = true
         queryTransaction(this.constructRequestBody()).then(res => {
           this.resultTextarea = JSON.stringify(res, null, 2)
-          this.clearInputContent()
           this.loadingState = false
         }).catch(() => {
           this.resultTextarea = ''
