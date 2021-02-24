@@ -6,6 +6,7 @@
         <router-link to="/block"><span class="route-tag">Block</span></router-link>&nbsp;&nbsp;
         <router-link to="/transaction"><span class="route-tag">Transaction</span></router-link>&nbsp;&nbsp;
         <router-link to="/balance"><span class="route-tag">Balance</span></router-link>&nbsp;&nbsp;
+        <router-link to="/location"><span class="route-tag">Location</span></router-link>&nbsp;&nbsp;
         <router-link to="/auditing"><span class="route-tag">Auditing</span></router-link>
       </div>
     </el-header>
@@ -27,7 +28,7 @@
   color #2c3e50
   margin-top 0px
 #nav
-  width 70%
+  width 75%
 .el-header
   background-color #3579F6
   line-height 60px
